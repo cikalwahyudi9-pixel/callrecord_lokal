@@ -1,0 +1,30 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Flutter pub get
+        run: flutter pub get
+      - name: Configure Flutter SDK path for Gradle
+        run: echo "flutter.sdk=$FLUTTER_ROOT" > android/local.properties
+      - name: Build release APK
+        uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: 8.9
+          arguments: :app:assembleRelease
+          build-root-directory: android
+      - uses: actions/upload-artifact@v4
+        with:
+          name: call-recorder-release-apk
+          path: android/app/build/outputs/apk/release/app-release.apk
