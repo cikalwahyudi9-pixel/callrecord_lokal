@@ -58,3 +58,4 @@ build/app/outputs/flutter-apk/app-release.apk
 - Call direction metadata.
 - Runtime diagnostics page showing which audio source is actually available.
 - Optional app-private encryption for saved recordings.
+Updated on 2026-09-27.
