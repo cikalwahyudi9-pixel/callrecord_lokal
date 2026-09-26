@@ -27,6 +27,12 @@ jobs:
       - name: Recreate missing Flutter project files
         run: flutter create --project-name call_recorder_local --org com.example --platforms android .
 
+      - name: Remove conflicting .kts files
+        run: |
+          rm -f android/build.gradle.kts
+          rm -f android/app/build.gradle.kts
+          rm -f android/settings.gradle.kts
+
       - name: Flutter pub get
         run: flutter pub get
 
